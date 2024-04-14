@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  spring-boot-app:
+    container_name: book-app-container
+    image: book-app.jar
+    build: ./
+    ports:
+      - "9090:8080"
+    environment:
+      DATABASE_URL: jdbc:mysql://mysql_db:3306/books_testing
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - mysql_db
+
+  mysql_db:
+    container_name: mysql-book-container
+    image: mysql
+    environment:
+      MYSQL_USER: mysql_user
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: java@2021
+      MYSQL_DATABASE: books_testing
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+volumes:
+  mysqldata: {}

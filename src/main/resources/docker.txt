@@ -1,0 +1,230 @@
+PS C:\Users\sanja\eclipse-workspace\docker> docker images
+REPOSITORY          TAG       IMAGE ID       CREATED        SIZE 
+openzipkin/zipkin   latest    9397027eab0f   4 weeks ago    182MB
+dpage/pgadmin4      latest    a0786aa69feb   4 weeks ago    471MB
+postgres            latest    b0b90c1d9579   2 months ago   425MB
+PS C:\Users\sanja\eclipse-workspace\docker> 
+
+
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker build -t docker-java-app.jar .
+[+] Building 4.2s (7/7) FINISHED                                                                                                                                     docker:default
+ => [internal] load .dockerignore                                                                                                                                              0.1s
+ => => transferring context: 2B                                                                                                                                                0.0s 
+ => [internal] load build definition from Dockerfile                                                                                                                           0.1s 
+ => => transferring dockerfile: 273B                                                                                                                                           0.0s 
+ => [internal] load metadata for docker.io/library/openjdk:8                                                                                                                   3.9s 
+ => [internal] load build context                                                                                                                                              0.0s
+ => => transferring context: 76B                                                                                                                                               0.0s 
+ => => resolve docker.io/library/openjdk:8@sha256:86e863cc57215cfb181bd319736d0baf625fe8f150577f9eb58bd937f5452cb8                                                             0.0s 
+ => CACHED [2/2] ADD target/docker-java-app.jar docker-java-app.jar                                                                                                            0.0s 
+ => exporting to image                                                                                                                                                         0.0s 
+ => => exporting layers                                                                                                                                                        0.0s 
+ => => writing image sha256:5e985872fe78b7a0d366258da919e1c674b7559a0e286ab34d1da1a9570a96ca                                                                                   0.0s 
+ => => naming to docker.io/library/docker-java-app.jar                                                                                                                         0.0s 
+
+View build details: docker-desktop://dashboard/build/default/default/lev1wjz2yh772b2w2skwih5du
+
+What's Next?
+  1. Sign in to your Docker account → docker login
+  2. View a summary of image vulnerabilities and recommendations → docker scout quickview
+PS C:\Users\sanja\eclipse-workspace\docker> docker images                        
+REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
+docker-java-app.jar   latest    5e985872fe78   18 minutes ago   544MB
+openzipkin/zipkin     latest    9397027eab0f   4 weeks ago      182MB
+dpage/pgadmin4        latest    a0786aa69feb   4 weeks ago      471MB
+postgres              latest    b0b90c1d9579   2 months ago     425MB
+PS C:\Users\sanja\eclipse-workspace\docker> docker run -p 9090:8080 docker-java-app.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.4)
+
+2024-03-10 13:01:38.337  INFO 1 --- [           main] com.demo.docker.DockerApplication        : Starting DockerApplication v0.0.1-SNAPSHOT using Java 1.8.0_342 on 6ef183cf8a71 wit
+h PID 1 (/docker-java-app.jar started by root in /)
+2024-03-10 13:01:38.341  INFO 1 --- [           main] com.demo.docker.DockerApplication        : No active profile set, falling back to 1 default profile: "default"
+2024-03-10 13:01:39.822  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-03-10 13:01:39.844  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-03-10 13:01:39.844  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2024-03-10 13:01:39.949  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-03-10 13:01:39.949  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1494 ms
+2024-03-10 13:01:40.427  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2024-03-10 13:01:40.441  INFO 1 --- [           main] com.demo.docker.DockerApplication        : Started DockerApplication in 2.651 seconds (JVM running for 3.534)
+Docker java app is running...
+
+
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker tag docker-java-app.jar sanjup0206/docker-java-app.jar 
+PS C:\Users\sanja\eclipse-workspace\docker> docker images                                                 
+REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
+docker-java-app.jar              latest    5e985872fe78   2 hours ago    544MB
+sanjup0206/docker-java-app.jar   latest    5e985872fe78   2 hours ago    544MB
+openzipkin/zipkin                latest    9397027eab0f   4 weeks ago    182MB
+dpage/pgadmin4                   latest    a0786aa69feb   4 weeks ago    471MB
+postgres                         latest    b0b90c1d9579   2 months ago   425MB
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker push sanjup0206/docker-java-app.jar                    
+Using default tag: latest
+The push refers to repository [docker.io/sanjup0206/docker-java-app.jar]
+40efaebbe8e8: Pushing [================================================>  ]  17.11MB/17.63MB
+6b5aaff44254: Pushing [========>                                          ]  35.77MB/209.2MB
+53a0b163e995: Pushed
+b626401ef603: Pushed
+9b55156abf26: Pushing [==========>                                        ]  32.41MB/152MB
+293d5db30c9f: Pushed
+03127cdb479b: Pushed
+9c742cd6c7a5: Pushing [==>                                                ]  5.932MB/124MB
+
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker push sanjup0206/docker-java-app.jar                    
+Using default tag: latest
+The push refers to repository [docker.io/sanjup0206/docker-java-app.jar]
+40efaebbe8e8: Pushed
+6b5aaff44254: Pushed
+53a0b163e995: Pushed
+b626401ef603: Pushed
+9b55156abf26: Pushed
+293d5db30c9f: Pushed
+03127cdb479b: Pushed
+9c742cd6c7a5: Pushed
+latest: digest: sha256:b28e30230ba2475158b86f5ae2ea156a71b4e23b0fb33e80df926b11f8905c60 size: 2007
+
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker images
+REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
+docker-java-app.jar              latest    5e985872fe78   2 hours ago    544MB
+sanjup0206/docker-java-app.jar   latest    5e985872fe78   2 hours ago    544MB
+openzipkin/zipkin                latest    9397027eab0f   4 weeks ago    182MB
+dpage/pgadmin4                   latest    a0786aa69feb   4 weeks ago    471MB
+postgres                         latest    b0b90c1d9579   2 months ago   425MB
+
+PS C:\Users\sanja\eclipse-workspace\docker> docker pull sanjup0206/docker-java-app.jar
+Using default tag: latest
+latest: Pulling from sanjup0206/docker-java-app.jar
+Digest: sha256:b28e30230ba2475158b86f5ae2ea156a71b4e23b0fb33e80df926b11f8905c60
+Status: Image is up to date for sanjup0206/docker-java-app.jar:latest
+docker.io/sanjup0206/docker-java-app.jar:latest
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview sanjup0206/docker-java-app.jar
+
+
+
+$ mvn clean package -DskipTests
+[INFO] Scanning for projects...
+[INFO]
+[INFO] --------------------------< com.demo:docker >---------------------------
+[INFO] Building docker 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-clean-plugin:3.2.0:clean (default-clean) @ docker ---
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ docker ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ docker ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to C:\Users\sanja\eclipse-workspace\docker\target\classes
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ docker ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory C:\Users\sanja\eclipse-workspace\docker\src\test\resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ docker ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to C:\Users\sanja\eclipse-workspace\docker\target\test-classes
+[INFO]
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ docker ---
+[INFO] Tests are skipped.
+[INFO]
+[INFO] --- maven-jar-plugin:3.2.2:jar (default-jar) @ docker ---
+[INFO] Building jar: C:\Users\sanja\eclipse-workspace\docker\target\dockerapp.jar
+[INFO]
+[INFO] --- spring-boot-maven-plugin:2.7.4:repackage (repackage) @ docker ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  19.493 s
+[INFO] Finished at: 2024-03-14T00:48:52+05:30
+[INFO] ------------------------------------------------------------------------
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/docker
+
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/docker
+$ docker ps -a
+CONTAINER ID   IMAGE               COMMAND                  CREATED              STATUS                     PORTS                              NAMES
+db86db8d5690   dockerapp.jar       "java -jar /dockerap…"   About a minute ago   Up About a minute          0.0.0.0:9090->8080/tcp             dockerapp_container
+7c0a64c6ac2e   postgres            "docker-entrypoint.s…"   9 minutes ago        Up 9 minutes               0.0.0.0:5433->5432/tcp             postgresql_container
+dea485925982   openzipkin/zipkin   "start-zipkin"           4 weeks ago          Exited (255) 2 weeks ago   9410/tcp, 0.0.0.0:9411->9411/tcp   zipkin
+107925f65109   b0b90c1d9579        "docker-entrypoint.s…"   4 weeks ago          Exited (0) 25 hours ago                                       postgresql
+3fad755ceb93   dpage/pgadmin4      "/entrypoint.sh"         4 weeks ago          Up 13 minutes              443/tcp, 0.0.0.0:5050->80/tcp      pgadmin
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/docker
+$ docker exec -it 7c0a64c6ac2e psql -U postgres
+psql (16.2 (Debian 16.2-1.pgdg120+2))
+Type "help" for help.
+
+postgres-# \l
+                                                       List of databases
+    Name    |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ employeedb | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+            |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+            |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres-# \c employeedb
+You are now connected to database "employeedb" as user "postgres".
+employeedb-# \dt
+           List of relations
+ Schema |   Name    | Type  |  Owner
+--------+-----------+-------+----------
+ public | employees | table | postgres
+(1 row)
+
+employeedb=# select * from employees;
+ id |        name        |   role
+----+--------------------+-----------
+  1 | John Doe           | Engineer
+  2 | Jane Smith         | Manager
+  3 | Michael Johnson    | Developer
+  4 | Emily Davis        | Designer
+  5 | Christopher Wilson | Analyst
+(5 rows)
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/docker
+$ curl -X POST \
+>   -H "Content-Type: application/json" \
+>   -d '{"name": "Iron Man", "role": "Superhero"}' \
+>   http://localhost:9090/api/v1/employees/add
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    86    0    45  100    41    471    429 --:--:-- --:--:-- --:--:--   914{"id":6,"name":"Iron Man","role":"Superhero"}
+
+employeedb=# select * from employees;
+ id |        name        |   role
+----+--------------------+-----------
+  1 | John Doe           | Engineer
+  2 | Jane Smith         | Manager
+  3 | Michael Johnson    | Developer
+  4 | Emily Davis        | Designer
+  5 | Christopher Wilson | Analyst
+  6 | Iron Man           | Superhero
+(6 rows)
+
+
+
