@@ -6,64 +6,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
 public class BookController {
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     // Get all books
     @GetMapping
     public ResponseEntity<List<Book>> getAllBookRecords() {
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookService.getAllBookRecords();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     // Get a book by ID
     @GetMapping("/{bookId}")
     public ResponseEntity<Book> getBookById(@PathVariable("bookId") Long bookId) {
-        Optional<Book> bookOptional = bookRepository.findById(bookId);
-        return bookOptional.map(book -> new ResponseEntity<>(book, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Book book = bookService.getBookById(bookId);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     // Create a new book
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBookRecord(@RequestBody Book book) {
-        Book savedBook = bookRepository.save(book);
+        Book savedBook = bookService.createBookRecord(book);
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
 
     // Update a book
-    @PutMapping("/update-book")
-    public ResponseEntity<Book> updateBook(@RequestBody Book book) {
-        if (book == null || book.getBookId() == null) {
-            throw new IllegalStateException("Book or ID should not be null.");
-        }
-
-        Optional<Book> optionalBook = bookRepository.findById(book.getBookId());
-        if (optionalBook.isPresent()) {
-            throw new IllegalStateException("Book with ID " + book.getBookId() + " does not exist.");
-        }
-
-        Book existingBookRecord = optionalBook.get();
-        existingBookRecord.setName(book.getName());
-        existingBookRecord.setSummary(book.getSummary());
-        existingBookRecord.setRating(book.getRating());
-
-        return new ResponseEntity<>(existingBookRecord, HttpStatus.OK);
+    @PutMapping("/update-book/{bookId}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long bookId, @RequestBody Book book) {
+        Book updatedBook = bookService.updateBook(bookId, book);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
     // Delete a book
     @DeleteMapping("/delete-book/{bookId}")
-    public ResponseEntity<HttpStatus> deleteBook(@PathVariable(value = "bookId") Long bookId) {
-        if (!bookRepository.existsById(bookId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        bookRepository.deleteById(bookId);
+    public ResponseEntity<Void> deleteBook(@PathVariable(value = "bookId") Long bookId) {
+        bookService.deleteBook(bookId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

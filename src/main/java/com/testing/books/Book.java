@@ -1,8 +1,9 @@
 package com.testing.books;
 
 
-import javax.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 
 @Data
@@ -22,5 +23,6 @@ public class Book {
     @NonNull
     private String summary;
 
-    private int rating;
+    private Double rating;
+
 }
