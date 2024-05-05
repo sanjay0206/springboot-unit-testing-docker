@@ -1,15 +1,50 @@
 package com.testing.books;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-public interface BookService {
-    List<Book> getAllBookRecords ();
 
-    Book getBookById (Long bookId);
+@Service
+public class BookService {
 
-    Book createBookRecord (Book book);
+    @Autowired
+    private BookRepository bookRepository;
 
-    Book updateBook (Long bookId, Book book);
+    public List<Book> getAllBookRecords() {
+        return  bookRepository.findAll();
+    }
 
-    void deleteBook (Long bookId);
+    public Book getBookById(Long bookId) {
+        return bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException("Book with ID: " + bookId + " not found."));
+    }
+
+    public Book createBookRecord(Book book) {
+        return bookRepository.save(book);
+    }
+
+    public Book updateBook(Long bookId, BookDto bookDto) {
+        Book existingBookRecord = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException("Book with ID: " + bookId + " not found."));
+
+        if (bookDto.getName() != null)
+            existingBookRecord.setName(bookDto.getName());
+
+        if (bookDto.getSummary() != null)
+            existingBookRecord.setSummary(bookDto.getSummary());
+
+        if (bookDto.getRating() != null)
+            existingBookRecord.setRating(bookDto.getRating());
+
+        return bookRepository.save(existingBookRecord);
+    }
+
+    public void deleteBook(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalStateException("Book with ID: " + bookId + " not found."));
+
+        bookRepository.delete(book);
+    }
 }

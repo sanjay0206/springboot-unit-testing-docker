@@ -8,25 +8,24 @@ services:
     ports:
       - "9090:8080"
     environment:
-      DATABASE_URL: jdbc:mysql://mysql_db:3306/books_testing
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
+      DATABASE_URL: jdbc:postgresql://postgres_db:5432/books_testing
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
       SPRING_PROFILES_ACTIVE: docker
     depends_on:
-      - mysql_db
+      - postgres_db
 
-  mysql_db:
-    container_name: mysql-book-container
-    image: mysql
+  postgres_db:
+    container_name: postgres-book-container
+    image: postgres
     environment:
-      MYSQL_USER: mysql_user
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: java@2021
-      MYSQL_DATABASE: books_testing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: books_testing
     ports:
-      - "3308:3306"
+      - "5432:5432"
     volumes:
-      - mysqldata:/var/lib/mysql
+      - postgresdata:/var/lib/postgresql/data
 
 volumes:
-  mysqldata: {}
+  postgresdata: {}

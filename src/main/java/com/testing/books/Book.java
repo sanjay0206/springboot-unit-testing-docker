@@ -14,13 +14,12 @@ import javax.persistence.*;
 @Table(name = "book_record")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_sequence")
+    @SequenceGenerator(name = "book_sequence", sequenceName = "book_seq", allocationSize = 1)
     private Long bookId;
 
-    @NonNull
     private String name;
 
-    @NonNull
     private String summary;
 
     private Double rating;

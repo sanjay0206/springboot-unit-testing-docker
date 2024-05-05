@@ -130,20 +130,23 @@ public class BookControllerTest {
     public void updateBook_success() throws Exception {
         // Updating an existing book record
         long bookId = 3L;
-        Book updatedBook = new Book(3L, "Updated Title", "Updated Summary", 4.5);
-        Mockito.when(bookService.updateBook(bookId, updatedBook)).thenReturn(updatedBook);
+        BookDto bookDto = BookDto.builder()
+                .name("Updated name")
+                .build();
+        RECORD_3.setName(bookDto.getName());
+
+        // Mocking the behavior of BookService to return the updated record
+        Mockito.when(bookService.updateBook(bookId, bookDto)).thenReturn(RECORD_3);
 
         // Converting the updated record to JSON and performing a PUT request
-        String content = mapper.writeValueAsString(updatedBook);
+        String content = mapper.writeValueAsString(bookDto);
         mockMvc.perform(MockMvcRequestBuilders.put("/books/update-book/" + bookId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(content))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", notNullValue()))
-                .andExpect(jsonPath("$.name", is(updatedBook.getName())))
-                .andExpect(jsonPath("$.summary", is(updatedBook.getSummary())))
-                .andExpect(jsonPath("$.rating", is(updatedBook.getRating())));
+                .andExpect(jsonPath("$.name", is(bookDto.getName())));
     }
 
     // Testing the deletion of a book record

@@ -1,0 +1,375 @@
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker images
+REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
+book-app.jar            latest    9ce6e930df2c   48 minutes ago   566MB
+api-gateway-image       latest    1d9e30935187   4 weeks ago      565MB
+address-service-image   latest    6075a1629901   4 weeks ago      585MB
+student-service-image   latest    d3e3cb5df106   4 weeks ago      595MB
+eureka-server-image     latest    1fab16869e15   4 weeks ago      571MB
+mysql                   latest    82563e0cbf18   5 weeks ago      632MB
+postgres                latest    8e4fc9e18489   2 months ago     431MB
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker rmi  9ce6e930df2c 8e4fc9e18489
+Untagged: book-app.jar:latest
+Deleted: sha256:9ce6e930df2c1898addc7c15e099926c72ffecccc16c654a3ace4abe1aeac829
+Untagged: postgres:latest
+Untagged: postgres@sha256:4aea012537edfad80f98d870a36e6b90b4c09b27be7f4b4759d72db863baeebb
+Deleted: sha256:8e4fc9e184899a58735e7ee333f5e272d7d2298cf59302006b71f33e217be130
+Deleted: sha256:20556776404719e468cedf971f65bb76c66105f8057e1e0b365ac1271bf0bf5f
+Deleted: sha256:11f952ba195639082a206aad80e5ce57004f9a95ba3d91b984e3b8a85c021bcd
+Deleted: sha256:9ba60d0297c156d9d5c514f24d3356e5bc59881fafbaec3d4cff7e5881956de1
+Deleted: sha256:332db29ace65db9b6e4eeb320d96713b8de185e66c7f265fb43b94ed74f10702
+Deleted: sha256:a689931d09e63d309a379515f45ad807a9f6b4cbe58ee8dcc7ead89b48bcf8b7
+Deleted: sha256:ecef297c79a0b31b3380640a7264536fb2278e6b256d2ea20e0124044c5a53fc
+Deleted: sha256:9bfddb4c33f327053cd36fe2d28138f5043b0e39a9e900f5b956a0521d195501
+Deleted: sha256:9ed2c6aab2dff940309d0c77ce0bb549ccfd5b9cc2e33e5763717af44dab8720
+Deleted: sha256:e1708d50f286e8d68ca62cba87d5562edc4b0e3a770acde9be4dffe739044252
+Deleted: sha256:7c74b0b111b7f74a7ab948f41d1983ef09a49cf4641b7bd68b0dfa2dc7d9c3de
+Deleted: sha256:12e9bf88edcca3f842c5ac33a2764325e3aed250c8ce78d77457623f0358e90e
+Deleted: sha256:0a5e61d8fd8ddc07a9d48e87f42068fe0084d4bb6ce21403e54754cf1293d9fc
+Deleted: sha256:43161363e31f351245464b40ecb77aa0187ffba710cd831d43380ff95f4aade1
+Deleted: sha256:52ec5a4316fadc09a4a51f82b8d7b66ead0d71bea4f75e81e25b4094c4219061
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker images
+REPOSITORY              TAG       IMAGE ID       CREATED       SIZE
+api-gateway-image       latest    1d9e30935187   4 weeks ago   565MB
+address-service-image   latest    6075a1629901   4 weeks ago   585MB
+student-service-image   latest    d3e3cb5df106   4 weeks ago   595MB
+eureka-server-image     latest    1fab16869e15   4 weeks ago   571MB
+mysql                   latest    82563e0cbf18   5 weeks ago   632MB
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ ls -lrt
+total 33
+drwxr-xr-x 1 sanja 197609     0 Mar  3 20:05 src
+-rw-r--r-- 1 sanja 197609  7592 Mar  3 20:05 mvnw.cmd
+-rwxr-xr-x 1 sanja 197609 11290 Mar  3 20:05 mvnw
+-rw-r--r-- 1 sanja 197609  1144 Mar  3 20:05 HELP.md
+-rw-r--r-- 1 sanja 197609   206 Apr 14 19:32 Dockerfile
+-rw-r--r-- 1 sanja 197609   724 May  5 12:39 docker-compose.yml
+-rw-r--r-- 1 sanja 197609  3107 May  5 12:54 pom.xml
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ mvn clean package -DskipTests -Dspring.profiles.active=docker
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.testing:books:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.springframework.boot:spring-boot-maven-plugin @ line 106, column
+12
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] -------------------------< com.testing:books >--------------------------
+[INFO] Building books 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-clean-plugin:3.2.0:clean (default-clean) @ books ---
+[INFO]
+[INFO] --- jacoco-maven-plugin:0.8.6:prepare-agent (default) @ books ---
+[INFO] argLine set to -javaagent:C:\\Users\\sanja\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.6\\org.jacoco.agent-0.8.6-runtime.jar=destfile=C:\\Users\\sanja\\eclipse-work
+space\\springboot-unit-testing-docker\\target\\jacoco.exec
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ books ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 2 resources
+[INFO] Copying 2 resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ books ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 9 source files to C:\Users\sanja\eclipse-workspace\springboot-unit-testing-docker\target\classes
+[INFO]
+[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ books ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory C:\Users\sanja\eclipse-workspace\springboot-unit-testing-docker\src\test\resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ books ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to C:\Users\sanja\eclipse-workspace\springboot-unit-testing-docker\target\test-classes
+[INFO]
+[INFO] --- maven-surefire-plugin:2.22.2:test (default-test) @ books ---
+[INFO] Tests are skipped.
+[INFO]
+[INFO] --- jacoco-maven-plugin:0.8.6:report (report) @ books ---
+[INFO] Skipping JaCoCo execution due to missing execution data file.
+[INFO]
+[INFO] --- maven-jar-plugin:3.2.2:jar (default-jar) @ books ---
+[INFO] Building jar: C:\Users\sanja\eclipse-workspace\springboot-unit-testing-docker\target\book-app.jar
+[INFO]
+[INFO] --- spring-boot-maven-plugin:2.7.4:repackage (repackage) @ books ---
+[INFO] Replacing main artifact with repackaged archive
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.524 s
+[INFO] Finished at: 2024-05-05T13:53:53+05:30
+[INFO] ------------------------------------------------------------------------
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ ls -lrt
+total 37
+drwxr-xr-x 1 sanja 197609     0 Mar  3 20:05 src
+-rw-r--r-- 1 sanja 197609  7592 Mar  3 20:05 mvnw.cmd
+-rwxr-xr-x 1 sanja 197609 11290 Mar  3 20:05 mvnw
+-rw-r--r-- 1 sanja 197609  1144 Mar  3 20:05 HELP.md
+-rw-r--r-- 1 sanja 197609   206 Apr 14 19:32 Dockerfile
+-rw-r--r-- 1 sanja 197609   724 May  5 12:39 docker-compose.yml
+-rw-r--r-- 1 sanja 197609  3107 May  5 12:54 pom.xml
+drwxr-xr-x 1 sanja 197609     0 May  5 13:53 target
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker-compose up
+[+] Running 16/2
+ ! spring-boot-app Warning                                                                                                                                                     4.9s
+ ✔ postgres_db 14 layers [⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]      0B/0B      Pulled                                                                                                              79.5s
+[+] Building 18.4s (8/8) FINISHED                                                                                                                                    docker:default
+ => [spring-boot-app internal] load build definition from Dockerfile                                                                                                           0.0s
+ => => transferring dockerfile: 245B                                                                                                                                           0.0s
+ => [spring-boot-app internal] load metadata for docker.io/library/openjdk:8                                                                                                   2.2s
+ => [spring-boot-app auth] library/openjdk:pull token for registry-1.docker.io                                                                                                 0.0s
+ => [spring-boot-app internal] load .dockerignore                                                                                                                              0.1s
+ => => transferring context: 2B                                                                                                                                                0.0s
+ => [spring-boot-app internal] load build context                                                                                                                              2.0s
+ => => transferring context: 39.80MB                                                                                                                                           1.9s
+ => CACHED [spring-boot-app 1/2] FROM docker.io/library/openjdk:8@sha256:86e863cc57215cfb181bd319736d0baf625fe8f150577f9eb58bd937f5452cb8                                      0.0s
+ => [spring-boot-app 2/2] ADD target/*.jar book-app.jar                                                                                                                       13.9s
+ => [spring-boot-app] exporting to image                                                                                                                                       0.2s
+ => => exporting layers                                                                                                                                                        0.2s
+ => => writing image sha256:3fcb21e1cda76a8b190eb099ab863dbd2586700f722748838e297c1e4e8d08ee                                                                                   0.0s
+ => => naming to docker.io/library/book-app.jar                                                                                                                                0.0s
+[+] Running 3/3
+ ✔ Network springboot-unit-testing-docker_default  Created                                                                                                                     0.1s
+ ✔ Container postgres-book-container               Created                                                                                                                     0.2s
+ ✔ Container book-app-container                    Created                                                                                                                     0.2s
+Attaching to book-app-container, postgres-book-container
+postgres-book-container  |
+postgres-book-container  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+postgres-book-container  |
+postgres-book-container  | 2024-05-05 08:26:50.689 UTC [1] LOG:  starting PostgreSQL 16.2 (Debian 16.2-1.pgdg120+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.
+0, 64-bit
+postgres-book-container  | 2024-05-05 08:26:50.689 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-book-container  | 2024-05-05 08:26:50.689 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-book-container  | 2024-05-05 08:26:50.696 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-book-container  | 2024-05-05 08:26:50.704 UTC [29] LOG:  database system was shut down at 2024-05-05 08:21:49 UTC
+postgres-book-container  | 2024-05-05 08:26:50.711 UTC [1] LOG:  database system is ready to accept connections
+book-app-container       |
+book-app-container       |   .   ____          _            __ _ _
+book-app-container       |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+book-app-container       | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+book-app-container       |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+book-app-container       |   '  |____| .__|_| |_|_| |_\__, | / / / /
+book-app-container       |  =========|_|==============|___/=/_/_/_/
+book-app-container       |  :: Spring Boot ::                (v2.7.4)
+book-app-container       |
+book-app-container       | 2024-05-05 08:26:52.188  INFO 1 --- [           main] com.testing.books.BooksApplication       : Starting BooksApplication v0.0.1-SNAPSHOT using Java 1.8
+.0_342 on 2f2326dc5f17 with PID 1 (/book-app.jar started by root in /)
+book-app-container       | 2024-05-05 08:26:52.194  INFO 1 --- [           main] com.testing.books.BooksApplication       : The following 1 profile is active: "docker"
+book-app-container       | 2024-05-05 08:26:53.152  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mo
+de.
+book-app-container       | 2024-05-05 08:26:53.227  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found
+ 1 JPA repository interfaces.
+book-app-container       | 2024-05-05 08:26:54.015  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+book-app-container       | 2024-05-05 08:26:54.033  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+book-app-container       | 2024-05-05 08:26:54.034  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+book-app-container       | 2024-05-05 08:26:54.143  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+book-app-container       | 2024-05-05 08:26:54.144  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in
+1869 ms
+book-app-container       | 2024-05-05 08:26:54.380  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default
+]
+book-app-container       | 2024-05-05 08:26:54.433  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.11.Final
+book-app-container       | 2024-05-05 08:26:54.682  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+book-app-container       | 2024-05-05 08:26:54.803  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+book-app-container       | 2024-05-05 08:26:55.017  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+book-app-container       | 2024-05-05 08:26:55.046  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreS
+QLDialect
+book-app-container       | Hibernate: drop table if exists book_record cascade
+book-app-container       | 2024-05-05 08:26:55.667  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+book-app-container       | 2024-05-05 08:26:55.668  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "book_record" does not exist, skipping
+book-app-container       | Hibernate: drop sequence if exists hibernate_sequence
+book-app-container       | 2024-05-05 08:26:55.669  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+book-app-container       | 2024-05-05 08:26:55.670  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : sequence "hibernate_sequence" does not exist, skipping
+book-app-container       | Hibernate: create sequence hibernate_sequence start 1 increment 1
+book-app-container       | Hibernate: create table book_record (book_id int8 not null, name varchar(255), rating float8, summary varchar(255), primary key (book_id))
+book-app-container       | 2024-05-05 08:26:55.695  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibern
+ate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+book-app-container       | 2024-05-05 08:26:55.706  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence uni
+t 'default'
+book-app-container       | 2024-05-05 08:26:56.170  WARN 1 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore
+, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+book-app-container       | 2024-05-05 08:26:56.665  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path
+ ''
+book-app-container       | 2024-05-05 08:26:56.682  INFO 1 --- [           main] com.testing.books.BooksApplication       : Started BooksApplication in 5.134 seconds (JVM running f
+or 5.673)
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
+cord book0_ where book0_.book_id=?
+book-app-container       | Hibernate: select nextval ('hibernate_sequence')
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Book app is running...
+postgres-book-container  | 2024-05-05 08:31:50.774 UTC [27] LOG:  checkpoint starting: time
+postgres-book-container  | 2024-05-05 08:31:54.459 UTC [27] LOG:  checkpoint complete: wrote 39 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.627 s, sync=0.03
+1 s, total=3.686 s; sync files=31, longest=0.011 s, average=0.001 s; distance=154 kB, estimate=154 kB; lsn=0/19D8F60, redo lsn=0/19D8F28
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker images
+REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
+book-app.jar            latest    3fcb21e1cda7   22 minutes ago   566MB
+api-gateway-image       latest    1d9e30935187   4 weeks ago      565MB
+address-service-image   latest    6075a1629901   4 weeks ago      585MB
+student-service-image   latest    d3e3cb5df106   4 weeks ago      595MB
+eureka-server-image     latest    1fab16869e15   4 weeks ago      571MB
+mysql                   latest    82563e0cbf18   5 weeks ago      632MB
+postgres                latest    8e4fc9e18489   2 months ago     431MB
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
+2f2326dc5f17   book-app.jar   "java -jar /book-app…"   23 minutes ago   Up 23 minutes   0.0.0.0:9090->8080/tcp   book-app-container
+b86ba2b09d4c   postgres       "docker-entrypoint.s…"   23 minutes ago   Up 23 minutes   0.0.0.0:5432->5432/tcp   postgres-book-container
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker exec -it b86ba2b09d4c psql -U postgres
+psql (16.2 (Debian 16.2-1.pgdg120+2))
+Type "help" for help.
+
+postgres=# \l
+                                                        List of databases
+     Name      |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+---------------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ books_testing | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres      | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0     | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+               |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1     | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+               |          |          |                 |            |            |            |           | postgres=CTc/postgres
+(4 rows)
+
+postgres=# \c books_testing
+You are now connected to database "books_testing" as user "postgres".
+books_testing=# \dt
+            List of relations
+ Schema |    Name     | Type  |  Owner
+--------+-------------+-------+----------
+ public | book_record | table | postgres
+(1 row)
+
+books_testing=
+
+
+# SELECT sequence_name FROM information_schema.sequences WHERE sequence_schema = 'public';
+ sequence_name
+---------------
+ book_seq
+(1 row)
+
+books_testing=# select * from book_record;
+ book_id |         name         | rating |                                                    summary
+---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
+       1 | Atomic Habits        |      5 | How to build better habits
+       2 | Think Fast and Slow  |    4.5 | How to create good mental models about thinking
+       3 | Grokking Algorithms  |      5 | Learn algorithms the fun way
+       4 | Cooking Fundamentals |      5 | Explores essential cooking principles and techniques to elevate your culinary skills.
+       5 | Science of Cooking   |    4.5 | Delves into the scientific aspects of cooking, providing insights to enhance your culinary expertise.
+       6 | Italian Cuisine      |      4 | Showcases classic Italian recipes and culinary traditions, offering a taste of Italy's rich culinary heritage.
+(6 rows)
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ curl --location 'http://localhost:9090/books/create-book' \
+> --header 'Content-Type: application/json' \
+> --data '{
+>     "name": "Marvelous Adventures",
+>     "summary": "Action-packed stories featuring Marvel superheroes",
+>     "rating": 4.8
+> }
+> '
+{"bookId":7,"name":"Marvelous Adventures","summary":"Action-packed stories featuring Marvel superheroes","rating":4.8}
+
+books_testing=# select * from book_record;
+ book_id |         name         | rating |                                                    summary
+---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
+       1 | Atomic Habits        |      5 | How to build better habits
+       2 | Think Fast and Slow  |    4.5 | How to create good mental models about thinking
+       3 | Grokking Algorithms  |      5 | Learn algorithms the fun way
+       4 | Cooking Fundamentals |      5 | Explores essential cooking principles and techniques to elevate your culinary skills.
+       5 | Science of Cooking   |    4.5 | Delves into the scientific aspects of cooking, providing insights to enhance your culinary expertise.
+       6 | Italian Cuisine      |      4 | Showcases classic Italian recipes and culinary traditions, offering a taste of Italy's rich culinary heritage.
+       7 | Marvelous Adventures |    4.8 | Action-packed stories featuring Marvel superheroes
+(7 rows)
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ curl --location --request PUT 'http://localhost:9090/books/update-book/7' \
+> --header 'Content-Type: application/json' \
+> --data '{
+>     "name": "Marvelous Adventures updated version"
+> }
+> '
+{"bookId":7,"name":"Marvelous Adventures updated version","summary":"Action-packed stories featuring Marvel superheroes","rating":4.8}
+
+books_testing=# select * from book_record;
+ book_id |                 name                 | rating |                                                    summary
+---------+--------------------------------------+--------+----------------------------------------------------------------------------------------------------------------
+       1 | Atomic Habits                        |      5 | How to build better habits
+       2 | Think Fast and Slow                  |    4.5 | How to create good mental models about thinking
+       3 | Grokking Algorithms                  |      5 | Learn algorithms the fun way
+       4 | Cooking Fundamentals                 |      5 | Explores essential cooking principles and techniques to elevate your culinary skills.
+       5 | Science of Cooking                   |    4.5 | Delves into the scientific aspects of cooking, providing insights to enhance your culinary expertise.
+       6 | Italian Cuisine                      |      4 | Showcases classic Italian recipes and culinary traditions, offering a taste of Italy's rich culinary heritage.
+       7 | Marvelous Adventures updated version |    4.8 | Action-packed stories featuring Marvel superheroes
+(7 rows)
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ curl --location --request DELETE 'http://localhost:9090/books/delete-book/7'
+
+books_testing=# select * from book_record;
+ book_id |         name         | rating |                                                    summary
+---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
+       1 | Atomic Habits        |      5 | How to build better habits
+       2 | Think Fast and Slow  |    4.5 | How to create good mental models about thinking
+       3 | Grokking Algorithms  |      5 | Learn algorithms the fun way
+       4 | Cooking Fundamentals |      5 | Explores essential cooking principles and techniques to elevate your culinary skills.
+       5 | Science of Cooking   |    4.5 | Delves into the scientific aspects of cooking, providing insights to enhance your culinary expertise.
+       6 | Italian Cuisine      |      4 | Showcases classic Italian recipes and culinary traditions, offering a taste of Italy's rich culinary heritage.
+(6 rows)
+
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker-compose down
+[+] Running 3/3
+ ✔ Container book-app-container                    Removed                                                                                                                     0.4s
+ ✔ Container postgres-book-container               Removed                                                                                                                     0.6s
+ ✔ Network springboot-unit-testing-docker_default  Removed                                                                                                                     0.2s
+
+sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
