@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.testing</groupId>
-	<artifactId>books</artifactId>
+	<artifactId>springboot-unit-testing-docker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>books</name>
 	<description>Demo project for Spring Boot</description>

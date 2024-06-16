@@ -1,0 +1,65 @@
+stages:
+  - build
+  - test
+  - package
+  - image
+
+image: maven:3.8.4-openjdk-8
+
+variables:
+  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+  POSTGRES_HOST_AUTH_METHOD: trust
+  POSTGRES_HOST: postgres
+  POSTGRES_DB: $POSTGRES_DB
+  POSTGRES_USER: $POSTGRES_USER
+  POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+  DATABASE_URL: jdbc:postgresql://postgres:5432/$POSTGRES_DB
+  DATABASE_USERNAME: $POSTGRES_USER
+  DATABASE_PASSWORD: $POSTGRES_PASSWORD
+  SPRING_PROFILES_ACTIVE: docker
+
+default-postgres:
+  services:
+    - postgres
+  image: postgres
+  script:
+    - export PGPASSWORD=$POSTGRES_PASSWORD
+    - psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
+
+build-job:
+  stage: build
+  script:
+    - echo "POSTGRES_DB is $POSTGRES_DB"
+    - echo "Compiling the code..."
+    - mvn compile -Dspring.profiles.active=docker
+
+unit-test-job:
+  stage: test
+  services:
+    - postgres
+  script:
+    - echo "Running unit tests..."
+    - mvn clean test -Dspring.profiles.active=docker
+
+package-job:
+  stage: package
+  services:
+    - postgres
+  script:
+    - echo "Packaging the application..."
+    - mvn package -Dspring.profiles.active=docker
+  artifacts:
+    paths:
+      - target/*.jar
+
+docker-build:
+  stage: image
+  image: docker
+  services:
+    - docker:dind
+  script:
+    - echo "Building docker image for the application..."
+    - docker login -u $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+    - docker build -t $DOCKER_HUB_USERNAME/springboot-app .
+    - docker push $DOCKER_HUB_USERNAME/springboot-app
+    - docker images

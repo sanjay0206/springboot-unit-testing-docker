@@ -116,6 +116,7 @@ public class BookControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/books/delete-book/{id}", bookId))
                 .andExpect(status().isNoContent());
 
+        // Verifying that the service method was called once
         Mockito.verify(bookService, Mockito.times(1)).deleteBook(bookId);
     }
 
