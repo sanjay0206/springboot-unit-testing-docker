@@ -16,11 +16,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
-<!--		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>-->
-<!--		<sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>-->
-<!--		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>-->
-<!--		<sonar.language>java</sonar.language>-->
-<!--		<sonar.junit.reportsPath>target/surefire-reports</sonar.junit.reportsPath>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -111,7 +106,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-
 		<finalName>book-app</finalName>
 	</build>
 </project>
