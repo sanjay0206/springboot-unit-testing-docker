@@ -17,7 +17,7 @@ services:
 
   postgres_db:
     container_name: postgres-book-container
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

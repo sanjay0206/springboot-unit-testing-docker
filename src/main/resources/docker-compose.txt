@@ -193,14 +193,14 @@ book-app-container       | 2024-05-05 08:26:54.803  INFO 1 --- [           main]
 book-app-container       | 2024-05-05 08:26:55.017  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
 book-app-container       | 2024-05-05 08:26:55.046  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreS
 QLDialect
-book-app-container       | Hibernate: drop table if exists book_record cascade
+book-app-container       | Hibernate: drop table if exists books cascade
 book-app-container       | 2024-05-05 08:26:55.667  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-book-app-container       | 2024-05-05 08:26:55.668  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "book_record" does not exist, skipping
+book-app-container       | 2024-05-05 08:26:55.668  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "books" does not exist, skipping
 book-app-container       | Hibernate: drop sequence if exists hibernate_sequence
 book-app-container       | 2024-05-05 08:26:55.669  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
 book-app-container       | 2024-05-05 08:26:55.670  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : sequence "hibernate_sequence" does not exist, skipping
 book-app-container       | Hibernate: create sequence hibernate_sequence start 1 increment 1
-book-app-container       | Hibernate: create table book_record (book_id int8 not null, name varchar(255), rating float8, summary varchar(255), primary key (book_id))
+book-app-container       | Hibernate: create table books (book_id int8 not null, name varchar(255), rating float8, summary varchar(255), primary key (book_id))
 book-app-container       | 2024-05-05 08:26:55.695  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibern
 ate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 book-app-container       | 2024-05-05 08:26:55.706  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence uni
@@ -229,12 +229,12 @@ book-app-container       | Hibernate: select nextval ('hibernate_sequence')
 book-app-container       | Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from book_re
 cord book0_ where book0_.book_id=?
 book-app-container       | Hibernate: select nextval ('hibernate_sequence')
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
-book-app-container       | Hibernate: insert into book_record (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+book-app-container       | Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
 book-app-container       | Book app is running...
 postgres-book-container  | 2024-05-05 08:31:50.774 UTC [27] LOG:  checkpoint starting: time
 postgres-book-container  | 2024-05-05 08:31:54.459 UTC [27] LOG:  checkpoint complete: wrote 39 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.627 s, sync=0.03
@@ -280,7 +280,7 @@ books_testing=# \dt
             List of relations
  Schema |    Name     | Type  |  Owner
 --------+-------------+-------+----------
- public | book_record | table | postgres
+ public | books | table | postgres
 (1 row)
 
 books_testing=
@@ -292,7 +292,7 @@ books_testing=
  book_seq
 (1 row)
 
-books_testing=# select * from book_record;
+books_testing=# select * from books;
  book_id |         name         | rating |                                                    summary
 ---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
        1 | Atomic Habits        |      5 | How to build better habits
@@ -314,7 +314,7 @@ $ curl --location 'http://localhost:9090/books/create-book' \
 > '
 {"bookId":7,"name":"Marvelous Adventures","summary":"Action-packed stories featuring Marvel superheroes","rating":4.8}
 
-books_testing=# select * from book_record;
+books_testing=# select * from books;
  book_id |         name         | rating |                                                    summary
 ---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
        1 | Atomic Habits        |      5 | How to build better habits
@@ -335,7 +335,7 @@ $ curl --location --request PUT 'http://localhost:9090/books/update-book/7' \
 > '
 {"bookId":7,"name":"Marvelous Adventures updated version","summary":"Action-packed stories featuring Marvel superheroes","rating":4.8}
 
-books_testing=# select * from book_record;
+books_testing=# select * from books;
  book_id |                 name                 | rating |                                                    summary
 ---------+--------------------------------------+--------+----------------------------------------------------------------------------------------------------------------
        1 | Atomic Habits                        |      5 | How to build better habits
@@ -350,7 +350,7 @@ books_testing=# select * from book_record;
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
 $ curl --location --request DELETE 'http://localhost:9090/books/delete-book/7'
 
-books_testing=# select * from book_record;
+books_testing=# select * from books;
  book_id |         name         | rating |                                                    summary
 ---------+----------------------+--------+----------------------------------------------------------------------------------------------------------------
        1 | Atomic Habits        |      5 | How to build better habits

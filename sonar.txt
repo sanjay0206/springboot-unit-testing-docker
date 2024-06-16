@@ -1,0 +1,5 @@
+mvn clean verify sonar:sonar
+
+1) mvn test
+2) mvn jacoco:report
+3) mvn verify sonar:sonar
