@@ -52,8 +52,14 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-	</dependencies>
 
+		<!-- Enabling Swagger UR -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
