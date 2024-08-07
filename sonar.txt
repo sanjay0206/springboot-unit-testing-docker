@@ -1,3 +1,6 @@
+username: admin
+password: java@2021
+
 mvn clean verify sonar:sonar
 
 1) mvn test
