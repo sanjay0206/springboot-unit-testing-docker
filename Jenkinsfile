@@ -11,6 +11,7 @@ def sendFailureEmail() {
 }
 
 pipeline {
+
     agent any
 
     tools {
@@ -78,6 +79,7 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to Docker Hub
+
 					withCredentials([string(credentialsId: 'DOCKERHUB_PWD', variable: 'DOCKERHUB_PASSWORD')]) {
 					    bat "docker login -u ${env.DOCKER_USERNAME} -p %DOCKERHUB_PASSWORD%"
 					}
