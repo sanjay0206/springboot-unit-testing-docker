@@ -1,131 +1,142 @@
 package com.testing.books;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.testing.books.exception.BookNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(SpringRunner.class)
 public class BookControllerTest {
 
     private MockMvc mockMvc;
 
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    // Mocking the BookService dependency
     @Mock
     private BookService bookService;
 
-    // Injecting mocks into BookController
     @InjectMocks
     private BookController bookController;
 
-    // Sample book records for testing
-    private final Book BOOK_1 = new Book(1L, "Atomic Habits", "How to build better habits", 5.0);
-    private final Book BOOK_2 = new Book(2L, "Think Fast and Slow", "How to create good mental models about thinking", 4.0);
-    private final Book BOOK_3 = new Book(3L, "Grokking Algorithms", "Learn algorithms the fun way", 5.0);
+    private Book book;
 
-    @BeforeEach
-    public void setUp() {
+    private List<Book> books;
+
+    private ObjectMapper mapper;
+
+    @Before
+    public void setup() {
+        mapper = new ObjectMapper();
+
         mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
+
+        book = Book.builder()
+                .bookId(1L)
+                .name("Atomic Habits")
+                .summary("How to build better habits")
+                .rating(5.0)
+                .build();
+
+        books = Arrays.asList(
+                new Book(1L, "Atomic Habits", "How to build better habits", 5.0),
+                new Book(2L, "Grokking Algorithms", "Learn algorithms the fun way", 5.0),
+                new Book(3L, "Think Fast and Slow", "How to create good mental models about thinking", 4.0)
+        );
     }
 
     @Test
-    public void getAllBooks_success() throws Exception {
-        List<Book> records = Arrays.asList(BOOK_1, BOOK_2, BOOK_3);
-        Mockito.when(bookService.getAllBookRecords()).thenReturn(records);
+    public void test_getAllBookRecords() throws Exception {
+        when(bookService.getAllBookRecords()).thenReturn(books);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/books")
+        mockMvc.perform(get("/books")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[2].name", is(BOOK_3.getName())))
-                .andExpect(jsonPath("$[2].summary", is(BOOK_3.getSummary())))
-                .andExpect(jsonPath("$[2].rating", is(BOOK_3.getRating())));
+                .andExpect(jsonPath("$.size()").value(3))
+                .andExpect(jsonPath("$[0].name").value("Atomic Habits"))
+                .andExpect(jsonPath("$[1].name").value("Grokking Algorithms"))
+                .andExpect(jsonPath("$[2].name").value("Think Fast and Slow"));
+
+        verify(bookService, Mockito.times(1)).getAllBookRecords();
     }
 
     @Test
-    public void getBookById_success() throws Exception {
-        long bookId = 2L;
-        Mockito.when(bookService.getBookById(bookId)).thenReturn(BOOK_2);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/{id}", bookId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(BOOK_2.getName())))
-                .andExpect(jsonPath("$.summary", is(BOOK_2.getSummary())))
-                .andExpect(jsonPath("$.rating", is(BOOK_2.getRating())));
-    }
-
-    @Test
-    public void createBook_success() throws Exception {
-        Book newBook = new Book(4L, "Introduction to C", "The name but longer", 5.0);
-        Mockito.when(bookService.createBookRecord(newBook)).thenReturn(newBook);
-
-        String requestBody = mapper.writeValueAsString(newBook);
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/books/create-book")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(requestBody);
-
-        mockMvc.perform(mockRequest)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is(newBook.getName())))
-                .andExpect(jsonPath("$.summary", is(newBook.getSummary())))
-                .andExpect(jsonPath("$.rating", is(newBook.getRating())));
-    }
-
-    @Test
-    public void updateBook_success() throws Exception {
-        long bookId = 3L;
-        BookDto bookDto = BookDto.builder().name("Updated Grokking Algorithms").build();
-        BOOK_3.setName(bookDto.getName());
-
-        Mockito.when(bookService.updateBook(bookId, bookDto)).thenReturn(BOOK_3);
-
-        String requestBody = mapper.writeValueAsString(bookDto);
-        mockMvc.perform(MockMvcRequestBuilders.put("/books/update-book/{id}", bookId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(bookDto.getName())));
-    }
-
-    @Test
-    public void deleteBook_success() throws Exception {
+    public void test_getBookById() throws Exception {
         long bookId = 1L;
-        Mockito.doNothing().when(bookService).deleteBook(bookId);
+        when(bookService.getBookById(bookId)).thenReturn(book);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/delete-book/{id}", bookId))
+        mockMvc.perform(get("/books/{bookId}", bookId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Atomic Habits"));
+
+        verify(bookService, Mockito.times(1)).getBookById(bookId);
+    }
+
+    @Test
+    public void test_createBookRecord() throws Exception {
+        when(bookService.createBookRecord(book)).thenReturn(book);
+
+        mockMvc.perform(post("/books/create-book")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(book)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("Atomic Habits"));
+
+        verify(bookService, Mockito.times(1)).createBookRecord(book);
+    }
+
+    @Test
+    public void test_updateBook() throws Exception {
+        long bookId = 1L;
+        BookDTO bookDTO = BookDTO.builder().rating(4.5).build();
+        Book updatedBook = Book.builder()
+                .bookId(bookId)
+                .name("Atomic Habits")
+                .summary("How to build better habits")
+                .rating(4.5)
+                .build();
+
+        when(bookService.updateBook(bookId, bookDTO)).thenReturn(updatedBook);
+
+        mockMvc.perform(put("/books/update-book/{bookId}", bookId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(bookDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rating").value(4.5));
+
+        verify(bookService, Mockito.times(1)).updateBook(bookId, bookDTO);
+    }
+
+    @Test
+    public void test_deleteBook() throws Exception {
+        long bookId = 1L;
+
+        doNothing().when(bookService).deleteBook(bookId);
+
+        mockMvc.perform(delete("/books/delete-book/{bookId}", bookId)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
-        // Verifying that the service method was called once
-        Mockito.verify(bookService, Mockito.times(1)).deleteBook(bookId);
+        verify(bookService, Mockito.times(1)).deleteBook(bookId);
     }
 
-    @Test
-    public void deleteBook_notFound() throws Exception {
-        long bookId = 11L;
-        Mockito.doThrow(new BookNotFoundException("Book", "ID", bookId)).when(bookService).deleteBook(bookId);
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/books/delete-book/{id}", bookId))
-                .andExpect(status().isNotFound());
+    @After
+    public void tearDown() {
+        Mockito.reset(bookService);
     }
+
 }

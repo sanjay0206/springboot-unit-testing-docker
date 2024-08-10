@@ -1,16 +1,18 @@
 package com.testing.books;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+@Entity
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
 @Table(name = "books")
 public class Book {
     @Id
@@ -23,5 +25,4 @@ public class Book {
     private String summary;
 
     private Double rating;
-
 }
