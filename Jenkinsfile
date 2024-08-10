@@ -1,3 +1,5 @@
+// TO start jenkins - java -jar jenkins.war --httpPort=8090
+
 def sendSuccessEmail() {
     mail to: "${env.ADMIN_MAIL_ID}",
          subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
@@ -11,7 +13,6 @@ def sendFailureEmail() {
 }
 
 pipeline {
-
     agent any
 
     tools {
@@ -80,7 +81,7 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
 
-					withCredentials([string(credentialsId: 'DOCKERHUB_PWD', variable: 'DOCKERHUB_PASSWORD')]) {
+					withCredentials([string(credentialsId: 'DOCKERHUB_PWD_ID', variable: 'DOCKERHUB_PASSWORD')]) {
 					    bat "docker login -u ${env.DOCKER_USERNAME} -p %DOCKERHUB_PASSWORD%"
 					}
                     bat "docker push ${env.DOCKER_USERNAME}/devops-integration"
