@@ -13,6 +13,7 @@ def sendFailureEmail() {
 }
 
 pipeline {
+
     agent any
 
     tools {
