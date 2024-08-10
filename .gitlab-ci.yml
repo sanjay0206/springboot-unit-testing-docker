@@ -23,13 +23,13 @@ default-postgres:
     - postgres
   image: postgres
   script:
+    - echo "POSTGRES_DB = $POSTGRES_DB | POSTGRES_USER = $POSTGRES_USER | POSTGRES_PASSWORD = $POSTGRES_PASSWORD"
     - export PGPASSWORD=$POSTGRES_PASSWORD
     - psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT 'OK' AS status;"
 
 build-job:
   stage: build
   script:
-    - echo "POSTGRES_DB is $POSTGRES_DB"
     - echo "Compiling the code..."
     - mvn compile -Dspring.profiles.active=docker
 
