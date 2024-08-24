@@ -18,9 +18,9 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    @Transactional
+ //   @Transactional
     public BigDecimal getCountOfAllBooks() {
-        return bookRepository.getBooksCountNamedSPQuery();
+        return bookRepository.get_count_of_books();
     }
 
     @Override
