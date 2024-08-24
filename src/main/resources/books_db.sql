@@ -1,4 +1,11 @@
-INSERT INTO Book (id, title, summary, rating) VALUES
+CREATE TABLE books (
+    book_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    summary TEXT,
+    rating NUMERIC(3, 1) -- or use FLOAT if preferred
+);
+
+INSERT INTO books (book_id, name, summary, rating) VALUES
 (1, 'Atomic Habits', 'How to build better habits', 5.0),
 (2, 'Think Fast and Slow', 'How to create good mental models about thinking', 4.5),
 (3, 'Grokking Algorithms', 'Learn algorithms the fun way', 5.0),
