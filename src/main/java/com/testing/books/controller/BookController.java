@@ -1,10 +1,14 @@
-package com.testing.books;
+package com.testing.books.controller;
 
+import com.testing.books.dto.BookDTO;
+import com.testing.books.service.BookService;
+import com.testing.books.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -13,6 +17,12 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    // Get count of all books
+    @GetMapping("/count")
+    public ResponseEntity<BigDecimal> getCountOfAllBooks() {
+        return new ResponseEntity<>(bookService.getCountOfAllBooks(), HttpStatus.OK);
+    }
 
     // Get all books
     @GetMapping

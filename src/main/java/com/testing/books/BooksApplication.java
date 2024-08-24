@@ -1,5 +1,7 @@
 package com.testing.books;
 
+import com.testing.books.entity.Book;
+import com.testing.books.repository.BookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

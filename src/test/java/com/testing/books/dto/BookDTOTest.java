@@ -1,5 +1,6 @@
-package com.testing.books;
+package com.testing.books.dto;
 
+import com.testing.books.dto.BookDTO;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

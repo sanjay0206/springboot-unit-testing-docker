@@ -1,6 +1,10 @@
-package com.testing.books;
+package com.testing.books.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.testing.books.controller.BookController;
+import com.testing.books.dto.BookDTO;
+import com.testing.books.entity.Book;
+import com.testing.books.service.BookService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

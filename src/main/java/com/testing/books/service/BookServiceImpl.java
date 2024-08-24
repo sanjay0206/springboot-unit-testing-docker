@@ -1,9 +1,14 @@
-package com.testing.books;
+package com.testing.books.service;
 
+import com.testing.books.dto.BookDTO;
+import com.testing.books.entity.Book;
 import com.testing.books.exception.BookNotFoundException;
+import com.testing.books.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -11,6 +16,12 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Override
+    @Transactional
+    public BigDecimal getCountOfAllBooks() {
+        return bookRepository.getBooksCountNamedSPQuery();
+    }
 
     @Override
     public List<Book> getAllBookRecords() {

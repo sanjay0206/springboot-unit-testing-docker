@@ -1,4 +1,4 @@
-package com.testing.books;
+package com.testing.books.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Builder
@@ -14,6 +15,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books")
+@NamedStoredProcedureQuery(
+        name = "getBooksCountNamedSPQuery",
+        procedureName = "get_count_of_books",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.OUT, name = "total", type = BigDecimal.class)
+        }
+)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_sequence")

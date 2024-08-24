@@ -1,5 +1,6 @@
-package com.testing.books;
+package com.testing.books.entity;
 
+import com.testing.books.entity.Book;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

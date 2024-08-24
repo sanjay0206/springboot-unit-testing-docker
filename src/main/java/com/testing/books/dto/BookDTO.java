@@ -1,4 +1,4 @@
-package com.testing.books;
+package com.testing.books.dto;
 
 
 import lombok.AllArgsConstructor;
