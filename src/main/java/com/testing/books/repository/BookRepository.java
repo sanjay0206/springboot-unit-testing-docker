@@ -23,7 +23,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT get_count_of_books()", nativeQuery = true)
     BigDecimal getBooksCountNativeQuery();
 
-    //Using @NamedStoredProcedureQuery annotation
+    // Using @NamedStoredProcedureQuery annotation
     @Procedure(name = "getBooksCountNamedSPQuery")
     BigDecimal getBooksCountNamedSPQuery();
 }

@@ -14,7 +14,9 @@ INSERT INTO books (book_id, name, summary, rating) VALUES
 (6, 'Italian Cuisine', 'Showcases classic Italian recipes and culinary traditions, offering a taste of Italy\'s rich culinary heritage.', 4.0);
 
 
+
 CREATE OR REPLACE FUNCTION get_count_of_books(OUT total NUMERIC)
+	RETURNS NUMERIC
 LANGUAGE plpgsql
 AS $$
 BEGIN
