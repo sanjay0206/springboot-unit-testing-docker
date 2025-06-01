@@ -1,6 +1,5 @@
 package com.testing.books.exception;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<ErrorDetailsResponse> handleBookNotFoundException(BookNotFoundException exception,
                                                                             WebRequest webRequest) {
-        ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(LocalDateTime.now(), exception.getMessage(),
-                webRequest.getDescription(false));
+        ErrorDetailsResponse errorDetails = ErrorDetailsResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(exception.getMessage())
+                .details(webRequest.getDescription(false))
+                .build();
 
-        log.info("ErrorDetailsResponse: " + errorDetails);
+        log.error("Book not found: {}", exception.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
@@ -30,11 +32,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDetailsResponse> handleGlobalException(Exception exception,
                                                                       WebRequest webRequest) {
-        ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(LocalDateTime.now(), exception.getMessage(),
-                webRequest.getDescription(false));
+        ErrorDetailsResponse errorDetails = ErrorDetailsResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(exception.getMessage())
+                .details(webRequest.getDescription(false))
+                .build();
 
-        log.info("ErrorDetailsResponse: " + errorDetails);
+        log.error("Internal server error: {}", exception.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

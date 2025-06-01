@@ -1,7 +1,5 @@
 PS C:\Users\sanja\eclipse-workspace\docker> docker images
-REPOSITORY          TAG       IMAGE ID       CREATED        SIZE 
-openzipkin/zipkin   latest    9397027eab0f   4 weeks ago    182MB
-dpage/pgadmin4      latest    a0786aa69feb   4 weeks ago    471MB
+REPOSITORY          TAG       IMAGE ID       CREATED        SIZE
 postgres            latest    b0b90c1d9579   2 months ago   425MB
 
 PS C:\Users\sanja\eclipse-workspace\docker> docker build -t docker-java-app.jar .
@@ -28,8 +26,6 @@ What's Next?
 PS C:\Users\sanja\eclipse-workspace\docker> docker images                        
 REPOSITORY            TAG       IMAGE ID       CREATED          SIZE
 docker-java-app.jar   latest    5e985872fe78   18 minutes ago   544MB
-openzipkin/zipkin     latest    9397027eab0f   4 weeks ago      182MB
-dpage/pgadmin4        latest    a0786aa69feb   4 weeks ago      471MB
 postgres              latest    b0b90c1d9579   2 months ago     425MB
 PS C:\Users\sanja\eclipse-workspace\docker> docker run -p 9090:8080 docker-java-app.jar
 
@@ -41,7 +37,7 @@ PS C:\Users\sanja\eclipse-workspace\docker> docker run -p 9090:8080 docker-java-
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.7.4)
 
-2024-03-10 13:01:38.337  INFO 1 --- [           main] com.demo.docker.DockerApplication        : Starting DockerApplication v0.0.1-SNAPSHOT using Java 1.8.0_342 on 6ef183cf8a71 wit
+2024-03-10 13:01:38.337  INFO 1 --- [           main] com.demo.docker.DockerApplication        : Starting BooksApplication v0.0.1-SNAPSHOT using Java 1.8.0_342 on 6ef183cf8a71 wit
 h PID 1 (/docker-java-app.jar started by root in /)
 2024-03-10 13:01:38.341  INFO 1 --- [           main] com.demo.docker.DockerApplication        : No active profile set, falling back to 1 default profile: "default"
 2024-03-10 13:01:39.822  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
@@ -51,7 +47,7 @@ h PID 1 (/docker-java-app.jar started by root in /)
 2024-03-10 13:01:39.949  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1494 ms
 2024-03-10 13:01:40.427  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2024-03-10 13:01:40.441  INFO 1 --- [           main] com.demo.docker.DockerApplication        : Started DockerApplication in 2.651 seconds (JVM running for 3.534)
-Docker java app is running...
+Book app is running...
 
 
 PS C:\Users\sanja\eclipse-workspace\docker> docker tag docker-java-app.jar sanjup0206/docker-java-app.jar 
@@ -59,8 +55,6 @@ PS C:\Users\sanja\eclipse-workspace\docker> docker images
 REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
 docker-java-app.jar              latest    5e985872fe78   2 hours ago    544MB
 sanjup0206/docker-java-app.jar   latest    5e985872fe78   2 hours ago    544MB
-openzipkin/zipkin                latest    9397027eab0f   4 weeks ago    182MB
-dpage/pgadmin4                   latest    a0786aa69feb   4 weeks ago    471MB
 postgres                         latest    b0b90c1d9579   2 months ago   425MB
 
 PS C:\Users\sanja\eclipse-workspace\docker> docker push sanjup0206/docker-java-app.jar                    
@@ -94,8 +88,6 @@ PS C:\Users\sanja\eclipse-workspace\docker> docker images
 REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
 docker-java-app.jar              latest    5e985872fe78   2 hours ago    544MB
 sanjup0206/docker-java-app.jar   latest    5e985872fe78   2 hours ago    544MB
-openzipkin/zipkin                latest    9397027eab0f   4 weeks ago    182MB
-dpage/pgadmin4                   latest    a0786aa69feb   4 weeks ago    471MB
 postgres                         latest    b0b90c1d9579   2 months ago   425MB
 
 PS C:\Users\sanja\eclipse-workspace\docker> docker pull sanjup0206/docker-java-app.jar

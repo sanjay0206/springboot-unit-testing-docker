@@ -6,11 +6,6 @@ sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker
 $ docker images
 REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
 book-app.jar            latest    9ce6e930df2c   48 minutes ago   566MB
-api-gateway-image       latest    1d9e30935187   4 weeks ago      565MB
-address-service-image   latest    6075a1629901   4 weeks ago      585MB
-student-service-image   latest    d3e3cb5df106   4 weeks ago      595MB
-eureka-server-image     latest    1fab16869e15   4 weeks ago      571MB
-mysql                   latest    82563e0cbf18   5 weeks ago      632MB
 postgres                latest    8e4fc9e18489   2 months ago     431MB
 
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
@@ -38,11 +33,6 @@ Deleted: sha256:52ec5a4316fadc09a4a51f82b8d7b66ead0d71bea4f75e81e25b4094c4219061
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
 $ docker images
 REPOSITORY              TAG       IMAGE ID       CREATED       SIZE
-api-gateway-image       latest    1d9e30935187   4 weeks ago   565MB
-address-service-image   latest    6075a1629901   4 weeks ago   585MB
-student-service-image   latest    d3e3cb5df106   4 weeks ago   595MB
-eureka-server-image     latest    1fab16869e15   4 weeks ago   571MB
-mysql                   latest    82563e0cbf18   5 weeks ago   632MB
 
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
 $ ls -lrt
@@ -115,18 +105,6 @@ space\\springboot-unit-testing-docker\\target\\jacoco.exec
 [INFO] Total time:  7.524 s
 [INFO] Finished at: 2024-05-05T13:53:53+05:30
 [INFO] ------------------------------------------------------------------------
-
-sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
-$ ls -lrt
-total 37
-drwxr-xr-x 1 sanja 197609     0 Mar  3 20:05 src
--rw-r--r-- 1 sanja 197609  7592 Mar  3 20:05 mvnw.cmd
--rwxr-xr-x 1 sanja 197609 11290 Mar  3 20:05 mvnw
--rw-r--r-- 1 sanja 197609  1144 Mar  3 20:05 HELP.md
--rw-r--r-- 1 sanja 197609   206 Apr 14 19:32 Dockerfile
--rw-r--r-- 1 sanja 197609   724 May  5 12:39 docker-compose.yml
--rw-r--r-- 1 sanja 197609  3107 May  5 12:54 pom.xml
-drwxr-xr-x 1 sanja 197609     0 May  5 13:53 target
 
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
 $ docker-compose up
@@ -240,22 +218,64 @@ postgres-book-container  | 2024-05-05 08:31:50.774 UTC [27] LOG:  checkpoint sta
 postgres-book-container  | 2024-05-05 08:31:54.459 UTC [27] LOG:  checkpoint complete: wrote 39 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.627 s, sync=0.03
 1 s, total=3.686 s; sync files=31, longest=0.011 s, average=0.001 s; distance=154 kB, estimate=154 kB; lsn=0/19D8F60, redo lsn=0/19D8F28
 
-sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
-$ docker images
-REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
-book-app.jar            latest    3fcb21e1cda7   22 minutes ago   566MB
-api-gateway-image       latest    1d9e30935187   4 weeks ago      565MB
-address-service-image   latest    6075a1629901   4 weeks ago      585MB
-student-service-image   latest    d3e3cb5df106   4 weeks ago      595MB
-eureka-server-image     latest    1fab16869e15   4 weeks ago      571MB
-mysql                   latest    82563e0cbf18   5 weeks ago      632MB
-postgres                latest    8e4fc9e18489   2 months ago     431MB
+sanja@DESKTOP-2I4L826 MINGW64 ~/sts-workplace/springboot-unit-testing-docker (master)
+$ docker logs -f book-app-container
 
-sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
-$ docker ps -a
-CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                    NAMES
-2f2326dc5f17   book-app.jar   "java -jar /book-app…"   23 minutes ago   Up 23 minutes   0.0.0.0:9090->8080/tcp   book-app-container
-b86ba2b09d4c   postgres       "docker-entrypoint.s…"   23 minutes ago   Up 23 minutes   0.0.0.0:5432->5432/tcp   postgres-book-container
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.4)
+
+2025-05-29 15:22:58.842  INFO 1 --- [           main] com.testing.books.BooksApplication       : Starting BooksApplication v0.0.1-SNAPSHOT using Java 1.8.0_342 on 82a2262a10f5 with PID 1 (/book-app.jar started by root in /)
+2025-05-29 15:22:58.865  INFO 1 --- [           main] com.testing.books.BooksApplication       : The following 1 profile is active: "docker"
+2025-05-29 15:23:01.631  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-29 15:23:01.704  INFO 1 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 1 JPA repository interfaces.
+2025-05-29 15:23:02.793  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-05-29 15:23:02.814  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-29 15:23:02.815  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2025-05-29 15:23:02.912  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-29 15:23:02.912  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3634 ms
+2025-05-29 15:23:03.346  INFO 1 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-29 15:23:03.418  INFO 1 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.11.Final
+2025-05-29 15:23:03.698  INFO 1 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-05-29 15:23:03.827  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-29 15:23:04.131  INFO 1 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-29 15:23:04.161  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+Hibernate: drop table if exists books cascade
+2025-05-29 15:23:06.087  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-05-29 15:23:06.087  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : table "books" does not exist, skipping
+Hibernate: drop sequence if exists book_seq
+2025-05-29 15:23:06.088  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-05-29 15:23:06.089  WARN 1 --- [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : sequence "book_seq" does not exist, skipping
+Hibernate: create sequence book_seq start 1 increment 1
+Hibernate: create table books (book_id int8 not null, name varchar(255), rating float8, summary varchar(255), primary key (book_id))
+2025-05-29 15:23:06.160  INFO 1 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-05-29 15:23:06.194  INFO 1 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-29 15:23:08.724  WARN 1 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-29 15:23:10.667  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2025-05-29 15:23:10.683  INFO 1 --- [           main] com.testing.books.BooksApplication       : Started BooksApplication in 13.686 seconds (JVM running for 24.145)
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: select book0_.book_id as book_id1_0_0_, book0_.name as name2_0_0_, book0_.rating as rating3_0_0_, book0_.summary as summary4_0_0_ from books book0_ where book0_.book_id=?
+Hibernate: select nextval ('book_seq')
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Hibernate: insert into books (name, rating, summary, book_id) values (?, ?, ?, ?)
+Book app is running...
 
 sanja@DESKTOP-2I4L826 MINGW64 ~/eclipse-workspace/springboot-unit-testing-docker (master)
 $ docker exec -it b86ba2b09d4c psql -U postgres

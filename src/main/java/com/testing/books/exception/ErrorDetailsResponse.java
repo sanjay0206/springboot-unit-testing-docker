@@ -2,12 +2,14 @@ package com.testing.books.exception;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
+@Builder
 public class ErrorDetailsResponse {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private final LocalDateTime timestamp;
